@@ -11,7 +11,7 @@ web_modules/
 # Runtime files
 pids/
 *.pid
-*.seed
+*.seed  
 *.pid.lock
 
 # Build output
