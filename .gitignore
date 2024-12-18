@@ -1,0 +1,51 @@
+# Logs
+logs/
+*.log
+
+# Dependency directories
+node_modules/
+jspm_packages/
+bower_components/
+web_modules/
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Build output
+dist/
+build/
+.nyc_output/
+coverage/
+*.tsbuildinfo
+.cache/
+.next/
+.nuxt/
+out/
+.docusaurus/
+
+# Python virtual environments
+.env
+.venv/
+env/
+ENV/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py,cover
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# dotenv files
+.env
+.env.local
+.env.*.local
+
+# System files
+.DS_Store
+Thumbs.db
