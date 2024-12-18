@@ -5,16 +5,16 @@ The sentiment of this project is to create something that flows simply and is na
 Function over form.
 
 My goal is to get a functional application running that can later be expanded into something more specialized and feature-rich.
-Potential Features:
--abstract text/conversational input and outputs
--detailed information on the recommended books(long descriptions, common reader reviews/sentiments, links to best outside resources)
+Potential Features:  
+-abstract text/conversational input and outputs  
+-detailed information on the recommended books(long descriptions, common reader reviews/sentiments, links to best outside resources)  
 
 
-Front: NodeJS
-Back:GraphQL, Python, MongoDB, FastAPI, GPT 4.0, 
-
-Installs/Versions:
-Node.js v23.4.0
-Python 3.12.6
-MongoDB db version v8.0.4
-Git version 2.47.1.windows.1
+Front: NodeJS  
+Back:GraphQL, Python, MongoDB, FastAPI, GPT 4.0,   
+  
+Installs/Versions:  
+Node.js v23.4.0  
+Python 3.12.6  
+MongoDB db version v8.0.4  
+Git version 2.47.1.windows.1  
