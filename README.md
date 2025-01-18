@@ -7,11 +7,11 @@ Function over form.
 My goal is to get a functional application running that can later be expanded into something more specialized and feature-rich.
 Potential Features:  
 -abstract text/conversational input and outputs  
--detailed information on the recommended books(long descriptions, common reader reviews/sentiments, links to best outside resources)  
+-detailed information on the recommended books(long descriptions, common reader reviews/sentiments, links to best outside resources or purchase options)  
 
 
 Front: NodeJS  
-Back:GraphQL, Python, MongoDB, FastAPI, GPT 4.0,   
+Back:GraphQL, Python, MongoDB, RestAPI, GPT 4.0,   
   
 Installs/Versions:  
 Node.js v23.4.0  

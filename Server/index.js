@@ -1,15 +1,28 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const cors = require('cors');
+
+console.log("MONGO_URI:", process.env.MONGO_URI);
+
 
 const app = express();
-
 app.use(express.json());
 
+// Enable CORS
+app.use(cors());
+
+
+//For Get request restAPI
+const bookRoutes = require('./routes/books'); // Path to the books.js file
+app.use('/api/books', bookRoutes);
+
 //MongoDB connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/River';
+require('dotenv').config();
+const mongoURI = process.env.MONGO_URI;
+const PORT = process.env.PORT || 5000;
 mongoose
-    .connect(mongoURI,)
+    .connect(mongoURI)
     .then(() => console.log('Conneccted to MongoDB'))
     .catch((err) => console.error('Failed to connect to MongoDB:', err));
 
@@ -19,7 +32,8 @@ app.get('/', (req, res) =>{
 });
 
 //Start the server
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
