@@ -1,4 +1,5 @@
 import './App.css';
+import BooksList from './components/BooksList';
 import React, { useState } from 'react';
 
 const App = () => {
@@ -9,6 +10,8 @@ const App = () => {
     book3: '',
   });
   const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +22,9 @@ const App = () => {
 // Form submission, send favoriteBooks to back-end
 const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('')
+
     try {
       const response = await fetch('/api/recommendations', {
         method: 'POST',
@@ -26,24 +32,30 @@ const handleFormSubmit = async (e) => {
         body: JSON.stringify(favoriteBooks),
       });
     
-    if (response.ok)  {
-      const data = await response.json();
-      setRecommendations(data); // Update reccomendations state(for backend)
-    } else {
-      console.error('Error fetching recommendations:', response.statusText);
-    }
+      if (response.ok)  {
+        const data = await response.json();
+        setRecommendations(data); // Update reccomendations state(for backend)
+      } else {
+        console.error('Error fetching recommendations:', response.statusText);
+        setError('Failed to get recommendations. Please try again');
+      }
     } catch (error) {
       console.error('Error fetching recommendations:', error);
+      setError('An error occured. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
 //HTML/JSX
 return (
+  <div className="app-container">
   <div className="input-container">
-    <h1>Next Book</h1>
-    <h3>Find Your Next Book to Read...</h3>
+  <h3> <i>Find Your Next </i></h3>
+    <h1> Favorite Book</h1>
+    
     <form onSubmit={handleFormSubmit}>
-        <label>Enter 3 Favorite Books:</label>
+        <label>Enter 3 Books You Love:</label>
         <input
             type="text"
             name="book1"
@@ -66,22 +78,16 @@ return (
             value={favoriteBooks.book3}         
             onChange={handleInputChange}
         />
-        <button type="submit">Get Recommendations</button>
-    </form>
-    <h2>Recommended Books:</h2>
-      <ul>
-        {recommendations.length > 0 ? (
-          recommendations.map((book, index) => (
-            <li key={index}>
-              <strong>{book.title}</strong> by {book.author}
-              <p>{book.description}</p>
-            </li>
-          ))
-        ) : (
-          <p>No recommendations yet.</p>
-        )}
-      </ul>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Fetching...' : 'Get Recommendations'}
+        </button>
+      </form>
     </div>
+    
+    {error && <p className="error-message"></p>}
+
+    <BooksList recommendations={recommendations} /> {/* Using BooksList Component */}
+  </div>
   );
 };
 
