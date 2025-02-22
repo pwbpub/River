@@ -6,7 +6,13 @@ const API = axios.create({
 
 export const fetchRecommendations = async (books) => {
     try {
+
+        console.log("Sending request to backend:", books); //Debugging
+
         const response = await API.post('/books/recommendations', books);
+
+        console.log("Backend Response:", response.data); //Debugging
+
         return response.data;
     }   catch (error) {
             console.error('Error fetching recommendations:', error);

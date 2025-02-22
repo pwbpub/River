@@ -26,7 +26,7 @@ mongoose
     .then(() => console.log('Conneccted to MongoDB'))
     .catch((err) => console.error('Failed to connect to MongoDB:', err));
 
-//Route
+//Route test
 app.get('/', (req, res) =>{
     res.send('Hello World! This server is running. Fuck yeah, America!');
 });

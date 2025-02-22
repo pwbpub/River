@@ -12,18 +12,18 @@ body {
     justify-content: center;
   }
 
-/*Main app container */
+/* Main app container */
 .app-container {
   text-align:center;
-  padding: 20px;
-  max-width: 600px;
-  margin-top: 50px;
-  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1px 25px;
+  /* max-width: 650px; */
+  margin-top: 30px;
+  background-color: rgba(0, 0, 0, 0.885);
   border-radius: 10px;
-}
+} 
 
 /*input selection*/
-.input-container{
+/* .input-container{
   margin-bottom: 20px;
 }
 
@@ -37,7 +37,7 @@ body {
 }
 
 /* Submit button */
-button {
+/* button {
   padding: 10px 15px;
   background-color: #28a745;
   color: white;
@@ -49,10 +49,10 @@ button {
 
 button:disabled {
   background-color: #666;
-}
+} */
 
 /* Recommendations section */
-.recommendations-container {
+/* .recommendations-container {
   background: rgba(255, 255, 255, 0.1);
   padding: 15px;
   border-radius: 8px;
@@ -87,11 +87,11 @@ button:disabled {
 .book-reason {
   font-style: italic;
   color: #ffc107
-}
+} */
 
 /* error message styling */
-.error-message {
+/* .error-message {
   color: #ff4d4d;
   font-weight: bold;
-  margin: 10px 0;
-}
+  /* margin: 10px 0;
+} */ 
