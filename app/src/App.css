@@ -1,6 +1,6 @@
 /*Background image and alignment(CSS)*/
 body {
-    background-image: url('C:\River\app\public\Background photos\Top Picks\Vertical Cubes Background.jpg');
+    background-image: url('./images/VerticalCubesBackground.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     font-family: 'Arial', sans-serif;
@@ -21,77 +21,11 @@ body {
   background-color: rgba(0, 0, 0, 0.885);
   border-radius: 10px;
 } 
-
-/*input selection*/
-/* .input-container{
-  margin-bottom: 20px;
-}
-
-.input-container input{
-  display: block;
-  width: 80%;
-  margin: 10px auto;
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
-}
-
-/* Submit button */
-/* button {
-  padding: 10px 15px;
-  background-color: #28a745;
+.error-message {
+  background-color: rgba(255, 0, 0, 0.2);
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:disabled {
-  background-color: #666;
-} */
-
-/* Recommendations section */
-/* .recommendations-container {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 600px;
-}
-
-.recommendations-container h2 {
-  font-size: 20px;
-  border-bottom: 2px solid white;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
-}
-
-.recommendations-container ul {
-  list-style: none;
-  padding: 0;
-}
-
-.recommendations-container li {
-  margin: 15px 0;
   padding: 10px;
+  margin: 10px 0;
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.2);
+  text-align: center;
 }
-
-.book-description {
-  font-size: 14px;
-  color: #ddd;
-}
-
-.book-reason {
-  font-style: italic;
-  color: #ffc107
-} */
-
-/* error message styling */
-/* .error-message {
-  color: #ff4d4d;
-  font-weight: bold;
-  /* margin: 10px 0;
-} */ 
