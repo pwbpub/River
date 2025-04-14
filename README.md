@@ -11,10 +11,5 @@ Potential Features:
 
 
 Front: NodeJS  
-Back:GraphQL, Python, MongoDB, RestAPI, GPT 4.0,   
+Back:GraphQL, Python, MongoDB, RestAPI, OpenAI GPT,   
   
-Installs/Versions:  
-Node.js v23.4.0  
-Python 3.12.6  
-MongoDB db version v8.0.4  
-Git version 2.47.1.windows.1  
