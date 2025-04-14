@@ -1,25 +1,34 @@
 {
-  "dependencies": {
+    "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.1",
+    "@mui/material": "^7.0.1",
+    "@mui/styled-engine-sc": "^7.0.1",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.3",
     "npm-run-all": "^4.1.5",
-    "openai": "^4.80.1"
+    "openai": "^4.80.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.17"
   },
   "name": "river",
   "version": "1.0.0",
   "description": "Book Recommendation App",
   "main": "server/index.js",
   "scripts": {
-    "start": "npm-run-all --parallel server client",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm start",
     "client": "cd app && npm start"
   },
   "author": "Jesse Garris",
   "license": "MIT",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "eslint": "^8.57.1",
     "eslint-config-react-app": "^7.0.1"
   }

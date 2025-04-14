@@ -23,10 +23,30 @@ const OutputRecommendation = ({recommendations, error}) => {
                             <span className='author-title'> by {book.author} </span>
                             <p className="book-description">{book.description}</p>
                             <em className="book-reason">Reason: {book.reason}</em>
+
+                            {book.amazonLink && (
+                                <div className="purchase-options">
+                                    <a 
+                                    href={book.amazonLink} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="amazon-button"
+                                    >
+                                        <img
+                                            src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg"
+                                            alt="Amazon"
+                                            className="amazon-icon"
+                                        />
+                                        View/Purchase on Amazon
+                                    </a>
+                                </div>
+                            )}
+
                         </li>
                     ))}
                 </ul>
             </div>   
-        )};
+        );
+    };
 
 export default OutputRecommendation;

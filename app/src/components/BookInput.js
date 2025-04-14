@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import './BookInput.css';
 import { fetchRecommendations } from '../api';
+import AutocompleteInput from './AutocompleteInput';
 
 const BookInput = ({ setRecommendations, setError }) => {
     const [bookInputs, setBookInputs] = useState({
@@ -48,6 +49,7 @@ const BookInput = ({ setRecommendations, setError }) => {
         
 
     //See BookInput.css for formatting/visuals
+    //See AutocompletInput.css
 
      return (
     
@@ -56,13 +58,29 @@ const BookInput = ({ setRecommendations, setError }) => {
             <form onSubmit={handleSubmit}>
                 <p className="find-book-subtitle"> Enter a book you like, and why!</p>
 
-                <input type="text" name="book1" placeholder='Book 1' value={bookInputs.book1} onChange={handleChange} required />
-                <input type="text" name="reason1" placeholder='Why you liked it (optional)' value={bookInputs.reason1} onChange={handleChange} />
+                {/* <input type="text" name="book1" placeholder='Book 1' value={bookInputs.book1} onChange={handleChange} required /> */}
+                <AutocompleteInput
+                    name="book1"
+                    placeholder="Enter a book here"
+                    value={bookInputs.book1}
+                    onChange={handleChange}
+                    required/>
+                   <input type="text" name="reason1" placeholder='Why you liked it (optional)' value={bookInputs.reason1} onChange={handleChange} />
 
-                <input type="text" name="book2" placeholder='Book 2 (optional)' value={bookInputs.book2} onChange={handleChange}  />
+                {/* <input type="text" name="book2" placeholder='Book 2 (optional)' value={bookInputs.book2} onChange={handleChange}  /> */}
+                <AutocompleteInput
+                    name="book2"
+                    placeholder="Enter a book here"
+                    value={bookInputs.book2}
+                    onChange={handleChange}/>
                 <input type="text" name="reason2" placeholder='Why you liked it (optional)' value={bookInputs.reason2} onChange={handleChange} />
 
-                <input type="text" name="book3" placeholder='Book 3 (optional)' value={bookInputs.book3} onChange={handleChange}  />
+                {/* <input type="text" name="book3" placeholder='Book 3 (optional)' value={bookInputs.book3} onChange={handleChange}  /> */}
+                <AutocompleteInput
+                    name="book3"
+                    placeholder="Enter a book here"
+                    value={bookInputs.book3}
+                    onChange={handleChange}/>
                 <input type="text" name="reason3" placeholder='Why you liked it (optional)' value={bookInputs.reason3} onChange={handleChange} />
 
                 <button type='submit' disabled={loading}>

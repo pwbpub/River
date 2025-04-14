@@ -3,7 +3,10 @@ body {
     background-image: url('./images/VerticalCubesBackground.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    font-family: 'Arial', sans-serif;
+    font-family: "EB Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
     color: #fff;
     margin: 0;
     display: flex;
@@ -14,12 +17,10 @@ body {
 
 /* Main app container */
 .app-container {
-  text-align:center;
-  padding: 1px 25px;
-  /* max-width: 650px; */
-  margin-top: 30px;
+  /* text-align: center;
+  padding: 4%;
   background-color: rgba(0, 0, 0, 0.885);
-  border-radius: 10px;
+  border-radius: 10px; */
 } 
 .error-message {
   background-color: rgba(255, 0, 0, 0.2);

@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="app-container">
       {error && <div className='error-message'>{error}</div>} {/*displays error message*/}
-      <BookInput setRecommendations={setRecommendations} setError={{setError}} />
+      <BookInput setRecommendations={setRecommendations} setError={setError} />
       <OutputRecommendation recommendations={recommendations}/>
     </div>
   );

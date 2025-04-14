@@ -78,26 +78,56 @@ router.post('/recommendations', async (req, res) =>{
         const enhancedRecommendations = await Promise.all(
             recommendations.map(async (rec) => {
                 try {
-                    const googleResponse = await axios.get(
-                        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(rec.title)}`
-                    );
-                    const bookData = googleResponse.data.items?.[0]?.volumeInfo || {};
+                    await new Promise(resolve => setTimeout(resolve,300));
 
+                    console.log(`Fetching Google Books data for: ${rec.title}`);
+
+                    const googleResponse = await axios.get(
+                        `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(rec.title)}+inauthor:${encodeURIComponent(rec.author)}&maxResults=1`,
+                        {
+                            timeout: 5000, // Timeout to avoid hanging requests
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        }
+                    );
+
+                    console.log(`Google Books response for ${rec.title}:`, 
+                        googleResponse.data.items ? 'Data found' : 'No items found');
+
+                    const bookData = googleResponse.data.items?.[0]?.volumeInfo || {};
+                    
+                    
+                    const affiliateId = 'thesheappr-21'; // Replace with actual ID
+                    const searchTerm = `${rec.title} ${rec.author}`.replace(/\s+/g, '+');
+                    const amazonLink = `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;
+                    
+                    
                     return {
                         title: rec.title,
                         author: rec.author,
                         reason: rec.reason,
                         description: bookData.description || 'No description available.',
+                        amazonLink: amazonLink,
                     };
                 } catch (error) {
                     console.error(`Error fetching Google Books data for ${rec.title}:`, error.message);
+                    
+                    // Even with an error, create an Amazon search link
+                    const searchTerm = `${rec.title} ${rec.author}`.replace(/\s+/g, '+');
+                    const affiliateId = 'thesheappr-21';
+                    const amazonLink = `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;
+                    
                     return {
                         ...rec,
-                        description: 'Failed to fetch Google Books data.',
+                        description: 'Book details unavailable.',
+                        amazonLink: amazonLink
                     };
                 }
             })
         );
+            
+
        // Return enhanced recommendations to frontend
        res.json(enhancedRecommendations);
 

@@ -54,3 +54,38 @@ Styling for the Book Recommendation(output) section
   font-style: italic;
   color: #000000
 }
+/* .book-thumbnail{
+width: 80px;
+height: auto;
+margin-right: 15px;
+border-radius: 4px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+} */
+
+.purchase-options{
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.amazon-button {
+  display: flex;
+  align-items: center;
+  background-color: #ff9900;
+  color: #000;
+  text-decoration: none;
+  padding: 8px 15p;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-colo 0.2s;
+}
+
+.amazon-button:hover {
+  background-color: #ffb732;
+}
+
+.amazon-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
