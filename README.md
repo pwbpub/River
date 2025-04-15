@@ -10,6 +10,6 @@ Potential Features:
 -detailed information on the recommended books(long descriptions, common reader reviews/sentiments, links to best outside resources or purchase options)  
 
 
-Front: NodeJS  
-Back:GraphQL, Python, MongoDB, RestAPI, OpenAI GPT,   
+Front: ReactJS
+Back: NodeJS, MongoDB, RestAPI, OpenAI GPT,   
   
