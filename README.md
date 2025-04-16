@@ -11,5 +11,5 @@ Potential Features:
 
 
 Front: ReactJS
-Back: NodeJS, MongoDB, RestAPI, OpenAI GPT,   
-  
+Back: NodeJS, MongoDB, RestAPI, OpenAI GPT,
+Versions are consistently updated to latest.
