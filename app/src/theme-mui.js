@@ -4,13 +4,13 @@ const theme = createTheme({
     typography: {
     fontFamily: '"EB Garamond", serif',
     fontWeightRegular: 400,
-  },
   palette: {
+  },
     primary: {
-      main: '#007bff', // This matches your button color
+      main: '#007bff',
     },
     secondary: {
-      main: '#ff9900', // This matches your Amazon button color
+      main: '#ff9900',
     },
     background: {
       default: 'transparent',
