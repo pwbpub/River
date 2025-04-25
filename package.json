@@ -21,7 +21,7 @@
   "description": "Book Recommendation App",
   "main": "server/index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "cd server && npm run start:dev",
     "server": "cd server && npm start",
     "client": "cd app && npm start"
   },
