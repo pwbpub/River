@@ -1,22 +1,28 @@
+import React from 'react';
 import './App.css';
-import BookInput from './components/BookInput';
-import OutputRecommendation from './components/OutputRecommendation';
-import React, { useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+// import { CssBaseline } from '@mui/material/CssBaseline';
+import theme from './theme-mui';
+// import nav from './components/NavigationAndLayout';
+// import EnterBookPage from './pages/EnterBookPage';
+// import EnterVibePage from './pages/EnterVibePage'
+// import OutputRecommendation from './components/OutputRecommendation';
+// import { Router } from 'express';
 
-
-const App = () => {
-  const [recommendations, setRecommendations] = useState([]);
-  const [error, setError] = useState('');
-
-  console.log("App State - Recommendations:", recommendations); // Debugging
-
+function App() {
   return (
-    <div className="app-container">
-      {error && <div className='error-message'>{error}</div>} {/*displays error message*/}
-      <BookInput setRecommendations={setRecommendations} setError={setError} />
-      <OutputRecommendation recommendations={recommendations}/>
-    </div>
+    <ThemeProvider theme={theme}>
+      {/* <Router> */}
+         {/* <nav>  
+          <Routes>
+            <Route path="/" element={<EnterBookPage />} />
+            <Route path="/book" element={<EnterBookPage />} />
+            <Route path="/vibe" element={<EnterVibePage />} />
+          </Routes>
+        </nav>  */}
+      {/* </Router> */}
+    </ThemeProvider>
   );
-};
+}
 
 export default App;
