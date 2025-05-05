@@ -26,7 +26,7 @@ const OutputRecommendation = ({recommendations, error}) => {
 
                             {book.amazonLink && (
                                 <div className="purchase-options">
-                                    <a 
+                                    <a
                                     href={book.amazonLink} 
                                     target="_blank" 
                                     rel="noopener noreferrer" 

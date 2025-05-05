@@ -11,7 +11,10 @@ module.exports = {
       "stream": false,
       "http": false,
       "url": false,
-      "buffer": false
+      "buffer": false,
+      "fs": false,
+      "net": false,
+      "util": false
     }
   }
 };

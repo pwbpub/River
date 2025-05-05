@@ -67,19 +67,19 @@ const theme = createTheme ({
       fontFamily: 'Roboto Slab',
     },
   },
-  overrides: {
-    MuiAppBar: {
-      colorInherit: {
-        backgroundColor: '#689f38',
-        color: '#fff',
-      },
-    },
-  },
-  props: {
-    MuiAppBar: {
-      color: 'inherit',
-    },
-  },
+  // overrides: {
+  //   MuiAppBar: {
+  //     colorInherit: {
+  //       backgroundColor: '#689f38',
+  //       color: '#fff',
+  //     },
+  //   },
+  // },
+  // props: {
+  //   MuiAppBar: {
+  //     color: 'inherit',
+  //   },
+  // },
 });
 
 export default theme;
