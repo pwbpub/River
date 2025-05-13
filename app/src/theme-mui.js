@@ -4,9 +4,11 @@ const theme = createTheme ({
   palette: {
     mode: 'light',
     primary: {
-      main: '#b7ab9f',
-      dark: '#6d6b64',
-      light: '#c1c1b4',
+      main: 'rgba(229, 229, 215, 1)',
+      dark: 'rgba(55, 53, 50, 1)',
+      light: 'rgba(193, 193, 180, 1)',
+      subdued: 'rgba(183, 171, 159, 1)',
+      contrastText: 'rgba(37,37,37,0.88)',
     },
     secondary: {
       main: 'rgba(140,63,5,0.85)',
