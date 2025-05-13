@@ -98,7 +98,7 @@ router.post('/recommendations', async (req, res) =>{
                     const bookData = googleResponse.data.items?.[0]?.volumeInfo || {};
                     
                     
-                    const affiliateId = 'thesheappr-21'; // Replace with actual ID
+                    const affiliateId = 'thesheappr-21'; // Replace with my amazon ID once created
                     const searchTerm = `${rec.title} ${rec.author}`.replace(/\s+/g, '+');
                     const amazonLink = `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;
                     
@@ -113,7 +113,7 @@ router.post('/recommendations', async (req, res) =>{
                 } catch (error) {
                     console.error(`Error fetching Google Books data for ${rec.title}:`, error.message);
                     
-                    // Even with an error, create an Amazon search link
+                    // Even with an error, creates an Amazon search link
                     const searchTerm = `${rec.title} ${rec.author}`.replace(/\s+/g, '+');
                     const affiliateId = 'thesheappr-21';
                     const amazonLink = `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;

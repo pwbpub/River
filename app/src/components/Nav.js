@@ -4,8 +4,6 @@ import {
     AppBar,
     Tabs,
     Tab,
-    rgbToHex,
-    hexToRgb
  } from '@mui/material';
 
 
@@ -166,7 +164,7 @@ const Nav = ({ children }) => {
 
                 // Book icon gets green when selected
                 '& .MuiSvgIcon-root': {
-                  color: 'rgba(197, 30, 30, 0.95)',
+                  color: 'rgb(161, 46, 0)',
                   opacity: 1,
                   transform: 'scale(1.1)', // Slightly larger when selected
                 },

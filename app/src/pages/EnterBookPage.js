@@ -1,11 +1,16 @@
 import React from 'react';
+import BookInput from '../components/BookInput';
+import OutputRecommendation from '../components/OutputRecommendation';
 
 const EnterBookPage = () => {
   return (
     <div>
-      <h1>Enter Book Page</h1>
+      <BookInput/>
+      <OutputRecommendation/>
     </div>
   );
 };
+
+
 
 export default EnterBookPage;
