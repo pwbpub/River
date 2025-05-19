@@ -1,4 +1,6 @@
 ﻿# Project River
+ ![openbook](https://github.com/user-attachments/assets/fe01e571-ec9f-4f35-b1c2-15187dd7d37a)
+
 The goal of this project is to create a simple book recommendation application. The app will have a minimalist UI and a LLM powering recommendations for users. 
 Users will input preferences such as their favorite genres, authors and styles and receive 1-3 new books to consider reading.
 The sentiment of this project is to create something that flows simply and is natural for the end user. Quality over quantity of features.
