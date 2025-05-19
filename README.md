@@ -1,7 +1,7 @@
 ﻿# Project River
 
 <div align="center">
- <img src="https://github.com/user-attachments/assets/fe01e571-ec9f-4f35-b1c2-15187dd7d37a" width="600" />
+ <img src="https://github.com/user-attachments/assets/fe01e571-ec9f-4f35-b1c2-15187dd7d37a" width="550" />
 </div>
  
 
