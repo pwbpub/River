@@ -8,10 +8,10 @@ const theme = createTheme ({
       dark: 'rgba(55, 53, 50, 1)',
       light: 'rgba(193, 193, 180, 1)',
       subdued: 'rgba(183, 171, 159, 1)',
-      contrastText: 'rgba(37,37,37,0.88)',
+      contrastText: 'rgba(37,37,37,.9)',
     },
     secondary: {
-      main: 'rgba(140,63,5,0.85)',
+      main: 'rgba(215, 94, 92, 0.9)',
       contrastText: 'rgba(255,255,255,0.95)',
     },
     info: {

@@ -6,7 +6,6 @@ import {
     Tab,
  } from '@mui/material';
 
-
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Link } from 'react-router';
@@ -133,7 +132,7 @@ const Nav = ({ children }) => {
                 //icon styling for unselected tab
                 '& .MuiSvgIcon-root': {
                 color: 'rgba(65, 65, 65, 0.99)', // Slightly dimmed white
-                opacity: 0.8,
+                opacity: 0.9,
                 transition: 'all 0.3s ease',
                 fontSize: '1.5rem', // Slightly larger icons
                 marginRight: '0.5rem',
@@ -164,7 +163,7 @@ const Nav = ({ children }) => {
 
                 // Book icon gets green when selected
                 '& .MuiSvgIcon-root': {
-                  color: 'rgb(161, 46, 0)',
+                  color: `${theme.palette.secondary.main}`,
                   opacity: 1,
                   transform: 'scale(1.1)', // Slightly larger when selected
                 },
