@@ -162,7 +162,7 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
                 <li {...props} key={option.id || option.fullTitle}>
                     <div style={{ width: '100%' }}>
                         <div style={{ 
-                            fontWeight: 'bold', 
+                            fontWeight: 'bold',
                             fontFamily: 'Roboto Slab'
                         }}>
                             {option.title}

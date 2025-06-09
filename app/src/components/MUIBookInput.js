@@ -8,6 +8,7 @@ import {
     Typography,
     IconButton,
     TextField,
+    Tooltip,
     CircularProgress
 } from '@mui/material';
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
@@ -86,7 +87,7 @@ return (
   
         <AutocompleteInput
             name="book1"
-            label="(1) Enter your favorite book here"
+            label="(1) Favorite book here"
             value={bookInputs.book1}
             onChange={handleChange}
             required
@@ -103,6 +104,8 @@ return (
         slotProps={{
             input: {
                 style: {
+                fontFamily: 'Roboto Slab',
+                fontSize: '1rem',
                     color: 'rgba(37,37,37,0.7)' // 70% opacity (lighter than autocomplete)
                 }
             },
@@ -220,15 +223,16 @@ return (
                 mt: 0.5,
                 mb:0.5
                 }}>
+        <Tooltip title="Add another book" arrow placement="right">
         <IconButton
-        centered
-        Tooltip title="Add another book"
+        // Tooltip title="Add another book"
         color="black"
         aria-label="add another favorite book for better results"
         onClick={() => setNumberOfForms(prev => prev + 1)}
         >
         <AddCircleOutlineSharpIcon/>
         </IconButton>
+        </Tooltip>
         </Box>
         )}
         
