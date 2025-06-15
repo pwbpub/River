@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import {Box, Typography} from '@mui/material';
+import {Box} from '@mui/material';
 import MUIBookInput from '../components/MUIBookInput';
-import OutputRecommendation from '../components/OutputRecommendation';
+import MUIOutputRecommendation from '../components/MUIOutputRecommendation';
 import openbook from '../images/openbook.png';
 import radialFade from '../images/radial-fade.png';
 
@@ -71,10 +71,10 @@ const EnterBookPage = () => {
 
       <MUIBookInput 
         setRecommendations={setRecommendations} 
-        setError={setError} 
+        setError={setError}
       />
       
-      <OutputRecommendation 
+      <MUIOutputRecommendation 
         recommendations={recommendations} 
         error={error} 
       />

@@ -5,8 +5,10 @@ const theme = createTheme ({
     mode: 'light',
     primary: {
       main: 'rgba(229, 229, 215, 1)',
+      main2: 'rgb(237, 237, 231)',
       dark: 'rgba(55, 53, 50, 1)',
       light: 'rgba(193, 193, 180, 1)',
+      light2: 'rgba(216, 232, 232, 0.97)',
       subdued: 'rgba(183, 171, 159, 1)',
       contrastText: 'rgba(37,37,37,.9)',
     },

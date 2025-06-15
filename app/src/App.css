@@ -2,14 +2,4 @@ body {
     background-image: url('./images/VerticalCubesBackground96.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    /* font-family: "EB Garamond", serif; */
-    /* font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    color: #fff;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; */
   }

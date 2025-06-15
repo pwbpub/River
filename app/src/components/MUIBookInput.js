@@ -5,7 +5,6 @@ import {
     Paper,
     Stack,
     Button,
-    Typography,
     IconButton,
     TextField,
     Tooltip,
@@ -31,30 +30,24 @@ const MUIBookInput = ({ setRecommendations, setError }) => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-        if (typeof setError === 'function') {
-            setError('');
-        }
+    if (typeof setError === 'function') {
+        setError('');
+    }
 
-        console.log("Sending to backend:", bookInputs); //debug
-
-        try {
+    try {
         const data = await fetchRecommendations(bookInputs);
         if (data.error) {
             console.error(data.error);
-            if (typeof setError ==='function'){
+            if (typeof setError === 'function'){
                 setError(data.error);
             }
         } else {
             setRecommendations(data);
         }
     } catch (error) {
-        console.error("Error fetching recommendations:", error);
-        if (typeof setError ==='function') {
-            setError("Sorry, we couldn't get your recommendations. Please try again.");
-        }
     } finally {
         setLoading(false);
     }
@@ -75,9 +68,8 @@ return (
         bgcolor: theme.palette.primary.main,    
     }}
     >
+    <form onSubmit={handleSubmit}>
     <Stack 
-        component="form"
-        onSubmit={handleSubmit}
         spacing={1.5}
         sx={{
         justifyContent: "flex-start",
@@ -119,7 +111,7 @@ return (
             bgcolor: 'white',
             borderRadius: 1,
             '& .MuiInputBase-input': {
-                color: 'rgba(37,37,37,1) !important', // Force with !important
+                color: 'rgba(37,37,37,1) !important',
                 '&::placeholder': {
                     color: 'rgba(37,37,37,0.6)',
                     opacity: '1 !important'
@@ -225,7 +217,6 @@ return (
                 }}>
         <Tooltip title="Add another book" arrow placement="right">
         <IconButton
-        // Tooltip title="Add another book"
         color="black"
         aria-label="add another favorite book for better results"
         onClick={() => setNumberOfForms(prev => prev + 1)}
@@ -236,23 +227,6 @@ return (
         </Box>
         )}
         
-        {/* <Box
-        sx={{
-                display: 'flex',
-                justifyContent:'center',
-                mt: 2.5,
-                mb:0.5
-                }}>
-        <Button
-        sx={{
-            bgcolor: theme.palette.secondary.main,
-            color: theme.palette.secondary.contrastText,
-        }}
-        type='submit'
-        disabled={loading}>
-                    {loading ? 'Loading Recommendations...' : 'Get Recommendations'}
-                </Button>
-        </Box> */}
         <Box
         sx={{
             display: 'flex',
@@ -276,7 +250,7 @@ return (
                 fontFamily: 'Roboto',
                 fontSize: '1rem',
                 '&:hover': {
-                    bgcolor: 'rgb(204, 84, 82)', // Darker version of secondary color
+                    bgcolor: 'rgb(204, 84, 82)',
                 },
                 '&:disabled': {
                     bgcolor: 'rgba(223, 96, 94, 0.72)', // Faded when disabled
@@ -291,6 +265,7 @@ return (
             ) : 'Get Recommendations'}
         </Button>
         </Box>
+        </form>
     </Paper>
 );
 
