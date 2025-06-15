@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react'; // MODIFIED: Imported useCallback
 import {
     Box,
     Paper,
@@ -18,15 +18,12 @@ import Flickity from 'flickity';
 import 'flickity/css/flickity.css';
 
 // ====================================================================
-// CHANGE 1: BookCard now manages its own state.
-// This prevents re-rendering the entire carousel when one card expands.
+// BookCard now accepts an `onResize` prop to communicate with the parent
 // ====================================================================
-const BookCard = ({ book }) => {
+const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
     const theme = useTheme();
-    // State for expanding the card is now local to this component.
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // The handler is also local.
     const handleExpandClick = () => {
         setIsExpanded(prev => !prev);
     };
@@ -139,7 +136,14 @@ const BookCard = ({ book }) => {
                             </Typography>
 
                             {/* Expandable Details */}
-                            <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                            {/* MODIFIED: Added onEntered and onExited to trigger the resize callback */}
+                            <Collapse 
+                                in={isExpanded} 
+                                timeout="auto" 
+                                unmountOnExit
+                                onEntered={onResize}
+                                onExited={onResize}
+                            >
                                 <Box sx={{ mt: 0.5 }}>
                                     <Typography variant="caption" display="block" sx={{ mb: 0.4 }}>
                                         <strong>Publisher:</strong> {book.publisher || 'Unknown'}
@@ -228,7 +232,7 @@ const BookCard = ({ book }) => {
                             </Typography>
                         </Box>
 
-                        {/* Book Description - uses local isExpanded state */}
+                        {/* Book Description */}
                         <Typography 
                             variant="body2" 
                             sx={{ 
@@ -245,7 +249,7 @@ const BookCard = ({ book }) => {
                             }
                         </Typography>
 
-                        {/* Expand/Collapse Button - uses local handler and state */}
+                        {/* Expand/Collapse Button */}
                         <Button
                             onClick={handleExpandClick}
                             endIcon={
@@ -263,13 +267,20 @@ const BookCard = ({ book }) => {
                                 mb: 1
                             }}
                         >
-                            {isExpanded ? 'Show Less' : 'See More'}
+                            {isExpanded ? 'Show Less' : 'Show More'}
                         </Button>
                     </Box>
                 </Box>
 
                 {/* Expanded Content */}
-                <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                {/* MODIFIED: Added onEntered and onExited to the second Collapse component */}
+                <Collapse 
+                    in={isExpanded} 
+                    timeout="auto" 
+                    unmountOnExit
+                    onEntered={onResize}
+                    onExited={onResize}
+                >
                     {/* Amazon Purchase Link */}
                     {book.amazonLink && (
                         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
@@ -306,14 +317,15 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
     const carouselRef = useRef(null);
     const flickityRef = useRef(null);
 
-    // REMOVED: `expandedCards` state is no longer needed here.
+    // ADDED: Created a stable resize handler with useCallback
+    const handleCarouselResize = useCallback(() => {
+        if (flickityRef.current) {
+            flickityRef.current.resize();
+        }
+    }, []);
 
-    // ====================================================================
-    // CHANGE 2: Updated useEffect for safer Flickity lifecycle management.
-    // ====================================================================
     useEffect(() => {
         if (recommendations && recommendations.length > 0 && carouselRef.current) {
-            // If Flickity isn't initialized, create a new instance.
             if (!flickityRef.current) {
                 flickityRef.current = new Flickity(carouselRef.current, {
                     cellAlign: 'center',
@@ -329,21 +341,18 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
                     friction: 0.28
                 });
             } else {
-                // If it exists, just reload the cells for the new recommendations.
-                // This is safer than destroying and recreating.
                 flickityRef.current.reloadCells();
-                flickityRef.current.select(0); // Optional: go to the first slide on update
+                flickityRef.current.select(0);
             }
 
-            // Cleanup function: always destroy Flickity on component unmount.
             return () => {
                 if (flickityRef.current) {
                     flickityRef.current.destroy();
-                    flickityRef.current = null; // Clear the ref
+                    flickityRef.current = null;
                 }
             };
         }
-    }, [recommendations]); // Dependency array is correct.
+    }, [recommendations]);
 
     if (error) {
         return (
@@ -384,7 +393,6 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
                 },
                 mx: 'auto',
                 mt: 4,
-                // mb: 6,
                 pt: 3,
                 pl: 1,
                 pr: 1,
@@ -443,10 +451,11 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
                 }}
             >
                 {recommendations.map((book, index) => (
-                    // The index is passed for the key, but the BookCard itself is now self-contained
+                    // MODIFIED: Passed the onResize prop to each BookCard
                     <BookCard 
                         key={index}
                         book={book}
+                        onResize={handleCarouselResize}
                     />
                 ))}
             </Box>
