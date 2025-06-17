@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Box} from '@mui/material';
 import MUIBookInput from '../components/MUIBookInput';
 import MUIOutputRecommendation from '../components/MUIOutputRecommendation';
@@ -6,31 +6,56 @@ import openbook from '../images/openbook.png';
 import radialFade from '../images/radial-fade.png';
 
 const EnterBookPage = () => {
-  // Add state management for recommendations and errors
+  // State for recommendations, errors, and the new collapsed state
   const [recommendations, setRecommendations] = useState([]);
   const [error, setError] = useState('');
+  const [isInputCollapsed, setIsInputCollapsed] = useState(false);
+  const [inputKey, setInputKey] = useState(Date.now()); // Key to force-reset the input component
+
+  /**
+   * This effect listens for changes to recommendations or errors.
+   * If either of them have content, it triggers the input component to collapse.
+   */
+  useEffect(() => {
+    if ((recommendations && recommendations.length > 0) || error) {
+      setIsInputCollapsed(true);
+    }
+  }, [recommendations, error]);
+
+  /**
+   * Handles the "hard reset". It clears all the state, returning the
+   * app to its initial view, and changes the key of the MUIBookInput
+   * component to ensure its internal state is completely reset.
+   */
+  const handleReset = () => {
+    setRecommendations([]);
+    setError('');
+    setIsInputCollapsed(false);
+    setInputKey(Date.now());
+  };
+
 
   return (
      <>
-      {/* Container for both logo and radial fade */}
+      {/* Container for both logo and radial fade (no changes here) */}
       <Box 
         sx={{
-          position: 'relative',  // Important: makes this the positioning context
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           mt: 4,
-          mb: 2,
+          mb: 0.5,
           width: '100%'
         }}
       >
-        {/* Radial fade positioned relative to container */}
+        {/* Radial fade */}
         <Box
           sx={{
             position: 'absolute',
-            top: '55%',  // Center vertically relative to container
-            left: '50%', // Center horizontally relative to container
-            transform: 'translate(-50%, -50%)', // Center the element itself
+            top: '55%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
             width: '600px',
             height: '600px',
             pointerEvents: 'none',
@@ -47,10 +72,10 @@ const EnterBookPage = () => {
           />
         </Box>
         
-        {/* Logo positioned relative to the same container */}
+        {/* Logo */}
         <Box 
           sx={{
-            position: 'relative', // Stacks on top of the radial fade
+            position: 'relative',
             zIndex: 1,
             display: 'flex',
             flexDirection: 'column',
@@ -70,8 +95,12 @@ const EnterBookPage = () => {
       </Box>
 
       <MUIBookInput 
+        key={inputKey} // A changing key will remount the component, resetting its state
         setRecommendations={setRecommendations} 
         setError={setError}
+        isInputCollapsed={isInputCollapsed}
+        setIsInputCollapsed={setIsInputCollapsed}
+        onReset={handleReset}
       />
       
       <MUIOutputRecommendation 

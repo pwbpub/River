@@ -392,7 +392,7 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
                   xl: '52%rem',
                 },
                 mx: 'auto',
-                mt: 4,
+                // mt: 1,
                 pt: 3,
                 pl: 1,
                 pr: 1,
