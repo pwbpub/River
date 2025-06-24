@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Autocomplete, TextField, CircularProgress, useTheme } from '@mui/material';
+import { Autocomplete, TextField, CircularProgress } from '@mui/material';
 
 const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => {
-    const theme = useTheme();
+    // const theme = useTheme();
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);

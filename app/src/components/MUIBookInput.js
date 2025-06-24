@@ -99,18 +99,28 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                         width: { xs: '75%', sm: '65%', md: '50%', lg: '37%', xl: '30%' },
                         minHeight: 100, mx: 'auto', mt: 1.5, mb: 4,
                         pt: 2.5, pb: 2, pl: 2, pr: 2, borderRadius: 2,
-                        bgcolor: theme.palette.primary.main,
+                        bgcolor: theme.palette.primary.main2,
                     }}
                 >
                     <form onSubmit={handleSubmit} noValidate>
                         <Stack spacing={1.5} sx={{ justifyContent: "flex-start", alignItems: "center", mx: 'auto' }}>
                             <Typography variant="button" sx={{
-                                textAlign: 'center', color: 'primary.dark', mb: 1.5,
-                                fontWeight:600, fontSize: '1.25rem', letterSpacing: '.04em'
+                                textAlign: 'center',
+                                color: theme.palette.logo.black,
+                                mb: 1.5,
+                                fontWeight:600,
+                                fontSize: '1.4rem',
+                                letterSpacing: '.04em',
+                                // lineHeight: "1em"
                             }}>
                                 Your Favorite Book 
                                 {' '}
-                                <Box component="span" role="img" aria-label="Down arrow" sx={{ fontSize: '1.5rem', verticalAlign: 'middle' }}>
+                                <Box component="span" role="img" aria-label="Down arrow" 
+                                sx={{ 
+                                    fontSize: '1.5rem',
+                                    verticalAlign: 'middle',
+                                    color: theme.palette.logo.black
+                                    }}>
                                     ⤵️
                                 </Box>
                             </Typography>
@@ -137,7 +147,8 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                     value={bookInputs.reason1}
                                     onChange={handleChange}
                                     variant="outlined"
-                                    inputProps={{ maxLength: 400 }}
+                                    slotProps={{ 
+                                                htmlInput: {maxLength: 280} }}
                                     sx={getReasonFieldStyles(bookInputs.reason1)}
                                 />
                             </Tooltip>
@@ -158,7 +169,8 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                             value={bookInputs.reason2}
                                             onChange={handleChange}
                                             variant="outlined"
-                                            inputProps={{ maxLength: 400 }}
+                                            slotProps={{ 
+                                                htmlInput: {maxLength: 280} }}
                                             sx={getReasonFieldStyles(bookInputs.reason2)}
                                         />
                                     </Tooltip>
@@ -181,7 +193,8 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                             value={bookInputs.reason3}
                                             onChange={handleChange}
                                             variant="outlined"
-                                            inputProps={{ maxLength: 400 }}
+                                            slotProps={{ 
+                                                htmlInput: {maxLength: 280} }}
                                             sx={getReasonFieldStyles(bookInputs.reason3)}
                                         />
                                     </Tooltip>
@@ -200,11 +213,18 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                         )}
 
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button type="submit" variant="contained" disabled={loading} sx={{
-                                justifyContent: 'center', mt: 1.4, pt: 1.5, pb: 1.3, px: 3,
-                                borderRadius: '19px', bgcolor: theme.palette.secondary.main,
-                                color: theme.palette.secondary.contrastText, fontWeight: 'bold', fontSize: '1rem',
-                                '&:hover': { bgcolor: 'rgb(204, 84, 82)' }, '&:disabled': { bgcolor: 'rgba(223, 96, 94, 0.72)' }
+                            <Button type="submit" variant="contained" disabled={loading} 
+                            sx={{
+                                justifyContent: 'center',
+                                mt: 1.4, pt: 1.5, pb: 1.3, px: 3,
+                                borderRadius: '19px',
+                                bgcolor: theme.palette.logo.redlight,
+                                color: theme.palette.primary.contrastText,
+                                letterSpacing: '.05em',
+                                fontWeight: 'bold',
+                                fontSize: '1rem',
+                                '&:hover': { bgcolor: 'rgb(204, 84, 82)' },
+                                '&:disabled': { bgcolor: theme.palette.logo.red}
                             }}>
                                 {loading ? (<><CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />Loading Recommendations...</>) : 'Get Recommendations'}
                             </Button>

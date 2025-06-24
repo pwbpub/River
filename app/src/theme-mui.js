@@ -16,6 +16,13 @@ const theme = createTheme ({
       main: 'rgba(215, 94, 92, 0.9)',
       contrastText: 'rgba(255,255,255,0.95)',
     },
+    logo: {
+      blue: 'rgb(115, 219, 219)',
+      red: 'rgb(255, 109, 99)',
+      redlight: 'rgb(255, 131, 122)',
+      // redlight: 'rgb(254, 121, 111,)',
+      black: 'rgb(19, 27, 44)'
+    },
     info: {
       main: 'rgba(2,136,209,0.89)',
     },
