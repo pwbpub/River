@@ -6,7 +6,7 @@ import openbook from '../images/openbook.png';
 import radialFade from '../images/radial-fade.png';
 
 const EnterBookPage = () => {
-  // State for recommendations, errors, and the new collapsed state
+  // State for recommendations, errors, and the collapsed state
   const [recommendations, setRecommendations] = useState([]);
   const [error, setError] = useState('');
   const [isInputCollapsed, setIsInputCollapsed] = useState(false);
@@ -23,9 +23,9 @@ const EnterBookPage = () => {
   }, [recommendations, error]);
 
   /**
-   * Handles the "hard reset". It clears all the state, returning the
+   * Handles the reset button. It clears all the state, returning the
    * app to its initial view, and changes the key of the MUIBookInput
-   * component to ensure its internal state is completely reset.
+   * component to ensure its internal state is reset.
    */
   const handleReset = () => {
     setRecommendations([]);
@@ -37,7 +37,7 @@ const EnterBookPage = () => {
 
   return (
      <>
-      {/* Container for both logo and radial fade (no changes here) */}
+      {/* Container for logo and radial fade*/}
       <Box 
         sx={{
           position: 'relative',
@@ -95,7 +95,7 @@ const EnterBookPage = () => {
       </Box>
 
       <MUIBookInput 
-        key={inputKey} // A changing key will remount the component, resetting its state
+        key={inputKey}
         setRecommendations={setRecommendations} 
         setError={setError}
         isInputCollapsed={isInputCollapsed}

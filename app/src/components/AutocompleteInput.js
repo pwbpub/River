@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Autocomplete, TextField, CircularProgress, useTheme } from '@mui/material';
+import { Box, Autocomplete, TextField, CircularProgress, useTheme } from '@mui/material';
 
 const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => {
     const theme = useTheme();
@@ -35,7 +35,7 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
                 });
                 setOptions(bookSuggestions);
             } else {
-                // Fallback to general search if no title matches
+                // Fallsback to general search if no title matches
                 const fallbackResponse = await axios.get(
                     `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=4`
                 );
@@ -73,10 +73,10 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
         return () => clearTimeout(timer);
     }, [inputValue]);
 
-    // Find matching option for current value
+    // Finds matching option for current value
     const valueOption = React.useMemo(() => {
         if (!value) return null;
-        // Try to find an exact match in options
+        // Tries to find an exact match in options
         const match = options.find(option => option.fullTitle === value);
         if (match) return match;
         // If no match but have a value, creates a custom option
@@ -102,12 +102,11 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
         }
     };
 
-    return (
+     return (
         <Autocomplete
             id={`${name}-autocomplete`}
             options={options}
             getOptionLabel={(option) => {
-                // Handle different option types
                 if (typeof option === 'string') return option;
                 return option.fullTitle || '';
             }}
@@ -124,7 +123,7 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
             loading={loading}
             fullWidth
             freeSolo
-            filterOptions={(x) => x} // Disable client-side filtering -Google Books API to handles this
+            filterOptions={(x) => x}
             renderInput={(params) => (
                 <TextField 
                     {...params}
@@ -136,7 +135,7 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
                         input: {
                             ...params.InputProps,
                             style: {
-                                color: 'rgba(37,37,37,1)' // Full opacity for autocomplete
+                                color: 'rgba(37,37,37,1)'
                             },
                             endAdornment: (
                                 <>
@@ -147,14 +146,14 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
                         },
                         htmlInput: params.inputProps
                     }}
-                    sx={{ 
+                    sx={{
                         bgcolor: 'white',
                         borderRadius: 1,
                         '& input::placeholder': {
-                            color: 'rgba(37,37,37,1)',
+                            color: 'rgba(37,37,37,.7)',
                             opacity: '1',
                         },
-                        ...sx // Merge any additional sx props passed from parent
+                        ...sx
                     }}
                 />
             )}
@@ -181,6 +180,4 @@ const MUIBookAutocomplete = ({ name, label, value, onChange, required, sx }) => 
         />
     );
 };
-
-
 export default MUIBookAutocomplete;

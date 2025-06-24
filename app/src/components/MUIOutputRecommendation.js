@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'; // MODIFIED: Imported useCallback
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     Box,
     Paper,
@@ -17,10 +17,7 @@ import {
 import Flickity from 'flickity';
 import 'flickity/css/flickity.css';
 
-// ====================================================================
-// BookCard now accepts an `onResize` prop to communicate with the parent
-// ====================================================================
-const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
+const BookCard = ({ book, onResize }) => {
     const theme = useTheme();
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -32,10 +29,12 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
         if (!text || text.length <= maxLength) return text;
         return text.substr(0, maxLength) + '...';
     };
-
+    
     const formatRatingsText = (rating, count) => {
-        if (!rating || !count) return 'No ratings available';
-        return `${rating.toFixed(1)} • ${count.toLocaleString()} voters`;
+        if (rating && count) {
+            return `${rating.toFixed(1)} • ${count.toLocaleString()} voters`;
+        }
+        return 'Rating not available';
     };
 
     return (
@@ -47,20 +46,18 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                 bgcolor: theme.palette.primary.light2,
                 boxShadow: 4,
                 borderRadius: 2,
-                mx: 1
+                mx: 1,
+                mb: 3, 
             }}
         >
             <CardContent sx={{ p: 3 }}>
-                {/* Main Layout: Image + Details on Left, Content on Right */}
                 <Box sx={{ display: 'flex', gap: 3, mb: 2 }}>
-                    {/* Left Side - Book Cover with Details Below */}
                     <Box 
                         sx={{ 
                             flexShrink: 0, 
                             width: 160
                         }}
                     >
-                        {/* Book Cover with Shadow Effect */}
                         <Box 
                             sx={{ 
                                 position: 'relative',
@@ -69,7 +66,6 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                                 mb: 2
                             }}
                         >
-                            {/* Shadow Box Behind Image */}
                             <Box
                                 sx={{
                                     position: 'absolute',
@@ -82,8 +78,6 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                                     zIndex: 0
                                 }}
                             />
-                            
-                            {/* Book Cover */}
                             {book.coverImage ? (
                                 <img
                                     src={book.coverImage}
@@ -122,21 +116,18 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                             )}
                         </Box>
 
-                        {/* Book Details Under Image */}
                         <Box sx={{ width: 140, fontSize: '0.8rem' }}>
-                            {/* Always Visible Details */}
                             <Typography variant="caption" display="block" sx={{ mb: 0.4, fontWeight: 'bold' }}>
                                 <strong>Genre:</strong> {book.genre || 'Fiction'}
                             </Typography>
+                            {/* MODIFIED: Changed to show the single "First Published" date */}
                             <Typography variant="caption" display="block" sx={{ mb: 0.4 }}>
-                                <strong>Published:</strong> {book.publishedDate || 'Unknown'}
+                                <strong>First Published:</strong> {book.originalYear || 'Unknown'}
                             </Typography>
                             <Typography variant="caption" display="block" sx={{ mb: 0.4 }}>
                                 <strong>Pages:</strong> {book.pageCount || 'Unknown'}
                             </Typography>
 
-                            {/* Expandable Details */}
-                            {/* MODIFIED: Added onEntered and onExited to trigger the resize callback */}
                             <Collapse 
                                 in={isExpanded} 
                                 timeout="auto" 
@@ -153,19 +144,12 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                                             <strong>ISBN:</strong> {book.isbn}
                                         </Typography>
                                     )}
-                                    {book.language && book.language !== 'en' && (
-                                        <Typography variant="caption" display="block" sx={{ mb: 0.4 }}>
-                                            <strong>Language:</strong> {book.language.toUpperCase()}
-                                        </Typography>
-                                    )}
                                 </Box>
                             </Collapse>
                         </Box>
                     </Box>
 
-                    {/* Right Side - Main Content */}
                     <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                        {/* Title and Author Section */}
                         <Box sx={{ mb: 2 }}>
                             <Typography 
                                 variant="h5" 
@@ -192,21 +176,21 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                                 by {book.author}
                             </Typography>
                             
-                            {/* Rating Stars */}
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                                <Rating 
-                                    value={book.averageRating || 4.0} 
-                                    precision={0.1} 
-                                    readOnly 
-                                    size="small" 
-                                />
-                                <Typography variant="body2" color="text.secondary">
-                                    {formatRatingsText(book.averageRating, book.ratingsCount)}
-                                </Typography>
-                            </Box>
+                            {book.averageRating && (
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                                    <Rating 
+                                        value={book.averageRating} 
+                                        precision={0.1} 
+                                        readOnly 
+                                        size="small" 
+                                    />
+                                    <Typography variant="body2" color="text.secondary">
+                                        {formatRatingsText(book.averageRating, book.ratingsCount)}
+                                    </Typography>
+                                </Box>
+                            )}
                         </Box>
 
-                        {/* LLM Reasoning */}
                         <Box sx={{ mb: 2, p: 2, bgcolor: 'rgba(215, 94, 92, 0.08)', borderRadius: 1, borderLeft: '4px solid', borderLeftColor: theme.palette.secondary.main }}>
                             <Typography 
                                 variant="subtitle2" 
@@ -228,11 +212,10 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                                     lineHeight: 1.5
                                 }}
                             >
-                                {book.reason || 'Based on your reading preferences, this book offers similar themes and writing style.'}
+                                {book.reason || 'Based on your reading preferences.'}
                             </Typography>
                         </Box>
 
-                        {/* Book Description */}
                         <Typography 
                             variant="body2" 
                             sx={{ 
@@ -245,35 +228,20 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                         >
                             {isExpanded 
                                 ? book.description || 'No description available.'
-                                : truncateText(book.description || 'No description available.', 120)
+                                : truncateText(book.description || 'No description available.', 150)
                             }
                         </Typography>
 
-                        {/* Expand/Collapse Button */}
                         <Button
                             onClick={handleExpandClick}
-                            endIcon={
-                                <ExpandMoreIcon 
-                                    sx={{ 
-                                        transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                                        transition: 'transform 0.3s'
-                                    }} 
-                                />
-                            }
-                            sx={{ 
-                                alignSelf: 'flex-start',
-                                color: theme.palette.secondary.main,
-                                fontWeight: 'bold',
-                                mb: 1
-                            }}
+                            endIcon={<ExpandMoreIcon sx={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }} />}
+                            sx={{ alignSelf: 'flex-start', color: theme.palette.secondary.main, fontWeight: 'bold', mb: 1 }}
                         >
                             {isExpanded ? 'Show Less' : 'Show More'}
                         </Button>
                     </Box>
                 </Box>
 
-                {/* Expanded Content */}
-                {/* MODIFIED: Added onEntered and onExited to the second Collapse component */}
                 <Collapse 
                     in={isExpanded} 
                     timeout="auto" 
@@ -281,7 +249,6 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                     onEntered={onResize}
                     onExited={onResize}
                 >
-                    {/* Amazon Purchase Link */}
                     {book.amazonLink && (
                         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                             <Button
@@ -296,9 +263,7 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
                                     fontWeight: 'bold',
                                     px: 3,
                                     py: 1,
-                                    '&:hover': {
-                                        bgcolor: '#ffb732',
-                                    }
+                                    '&:hover': { bgcolor: '#ffb732' }
                                 }}
                             >
                                 View/Purchase on Amazon
@@ -311,17 +276,18 @@ const BookCard = ({ book, onResize }) => { // MODIFIED: Accepted onResize prop
     );
 };
 
-
+// The rest of MUIOutputRecommendation remains the same
 const MUIOutputRecommendation = ({ recommendations, error }) => {
     const theme = useTheme();
     const carouselRef = useRef(null);
     const flickityRef = useRef(null);
 
-    // ADDED: Created a stable resize handler with useCallback
     const handleCarouselResize = useCallback(() => {
-        if (flickityRef.current) {
-            flickityRef.current.resize();
-        }
+        setTimeout(() => {
+            if (flickityRef.current) {
+                flickityRef.current.resize();
+            }
+        }, 150);
     }, []);
 
     useEffect(() => {
@@ -332,7 +298,8 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
                     wrapAround: true,
                     autoPlay: false,
                     prevNextButtons: true,
-                    pageDots: true,
+                    pageDots: false,
+                    adaptiveHeight: true,
                     draggable: true,
                     freeScroll: false,
                     groupCells: false,
@@ -358,16 +325,7 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
         return (
             <Paper
                 elevation={3}
-                sx={{
-                    maxWidth: 700,
-                    mx: 'auto',
-                    mt: 4,
-                    mb: 6,
-                    p: 3,
-                    borderRadius: 2,
-                    bgcolor: theme.palette.error.main,
-                    color: 'white'
-                }}
+                sx={{ maxWidth: 700, mx: 'auto', mt: 4, mb: 6, p: 3, borderRadius: 2, bgcolor: theme.palette.error.main, color: 'white' }}
             >
                 <Typography variant="h6" sx={{ textAlign: 'center' }}>
                     {error}
@@ -384,74 +342,27 @@ const MUIOutputRecommendation = ({ recommendations, error }) => {
         <Paper
             elevation={3}
             sx={{
-                maxWidth: {
-                  xs: '98%',
-                  sm: '90%',
-                  md: '75%',
-                  lg: '60%rem',
-                  xl: '52%rem',
-                },
-                mx: 'auto',
-                // mt: 1,
-                pt: 3,
-                pl: 1,
-                pr: 1,
-                pb: 1,
-                borderRadius: 2,
-                bgcolor: theme.palette.primary.main2
+                maxWidth: { xs: '98%', sm: '90%', md: '75%', lg: '60rem', xl: '52rem' },
+                mx: 'auto', pt: 3, px: 1, pb: 3, borderRadius: 2, bgcolor: theme.palette.primary.main2
             }}
         >
-            {/* Header */}
             <Typography
                 variant="h5"
                 component="h3"
-                sx={{
-                    fontWeight: 600,
-                    color: theme.palette.secondary.main,
-                    textAlign: 'center',
-                    pb: 1,
-                    borderBottom: '2px solid rgba(230, 164, 163, 0.75)',
-                    mb: 4,
-                    fontFamily: 'Roboto Slab'
-                }}
+                sx={{ fontWeight: 600, color: theme.palette.secondary.main, textAlign: 'center', pb: 1, borderBottom: '2px solid rgba(230, 164, 163, 0.75)', mb: 4, fontFamily: 'Roboto Slab' }}
             >
                 Recommended Books
             </Typography>
-
-            {/* Flickity Carousel */}
             <Box
                 ref={carouselRef}
                 className="main-carousel"
                 sx={{
-                    '& .flickity-page-dots': {
-                        bottom: '-50px'
-                    },
-                    '& .flickity-page-dots .dot': {
-                        width: '12px',
-                        height: '12px',
-                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                        border: 'none'
-                    },
-                    '& .flickity-page-dots .dot.is-selected': {
-                        backgroundColor: theme.palette.secondary.main
-                    },
-                    '& .flickity-prev-next-button': {
-                        width: '50px',
-                        height: '50px',
-                        backgroundColor: 'white',
-                        borderRadius: '50%',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                    },
-                    '& .flickity-prev-next-button:hover': {
-                        backgroundColor: '#f5f5f5'
-                    },
-                    '& .flickity-prev-next-button .arrow': {
-                        fill: '#333'
-                    }
+                    '& .flickity-prev-next-button': { width: '50px', height: '50px', backgroundColor: 'white', borderRadius: '50%', boxShadow: '0 4px 8px rgba(0,0,0,0.2)' },
+                    '& .flickity-prev-next-button:hover': { backgroundColor: '#f5f5f5' },
+                    '& .flickity-prev-next-button .arrow': { fill: '#333' }
                 }}
             >
                 {recommendations.map((book, index) => (
-                    // MODIFIED: Passed the onResize prop to each BookCard
                     <BookCard 
                         key={index}
                         book={book}
