@@ -17,8 +17,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { fetchRecommendations } from '../api';
 import AutocompleteInput from './AutocompleteInput';
+import customredarrow from '../images/customredarrow.png'
 
-// No longer need a separate ReasonInput component
 
 const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInputCollapsed, onReset }) => {
     const theme = useTheme();
@@ -61,11 +61,11 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
         }
     };
     
-    // MODIFIED: Reusable style function that returns dynamic styles for the TextField
+    //Reusable style function that returns dynamic styles for the TextField
     const getReasonFieldStyles = (reasonValue) => ({
         // Base styles that always apply
         mx: 'auto',
-        minHeight: '56px', // Prevents height from collapsing
+        minHeight: '56px',
         transition: 'width 0.3s ease-in-out, opacity 0.3s ease-in-out',
 
         // Conditional styles based on whether there's content
@@ -75,18 +75,21 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
         // Styles for the inner input element
         '& .MuiOutlinedInput-root': {
             bgcolor: 'white',
-            // Conditional border radius
             borderRadius: reasonValue.length > 0 ? 1 : 5, 
-            transition: 'border-radius 0.3s ease-in-out', // Animate the radius change
+            transition: 'border-radius 0.3s ease-in-out', // Animate
         },
         
-        // Styles to apply when the input is focused
+        // when the input is focused
         '&:focus-within': {
             width: '80%',
             opacity: 1,
             '& .MuiOutlinedInput-root': {
                 borderRadius: 1,
             },
+            '& input::placeholder': {
+                            color: 'rgba(37,37,37,.7)',
+                            opacity: '1',
+                        },
         }
     });
 
@@ -104,7 +107,8 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                 >
                     <form onSubmit={handleSubmit} noValidate>
                         <Stack spacing={1.5} sx={{ justifyContent: "flex-start", alignItems: "center", mx: 'auto' }}>
-                            <Typography variant="button" sx={{
+                            <Typography
+                                variant="button" sx={{
                                 textAlign: 'center',
                                 color: theme.palette.logo.black,
                                 mb: 1.5,
@@ -113,8 +117,28 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                 letterSpacing: '.04em',
                                 // lineHeight: "1em"
                             }}>
-                                Your Favorite Book 
-                                {' '}
+                                Your Favorite Book <Box component="span" role="img" aria-label="Down arrow" 
+                                                            sx={{
+                                                                paddingTop: "0",
+                                                                mt: "0",
+                                                                fontSize: '1.5rem',
+                                                                verticalAlign: 'middle',
+                                                                color: theme.palette.logo.black
+                                                                }}>
+                                                                    <img
+                                                                    src={customredarrow}
+                                                                    alt=""
+                                                                    style={{
+                                                                        paddingTop: '0px',
+                                                                        marginTop: '-7px',
+                                                                        height: '1.4em',        
+                                                                        width: 'auto',        
+                                                                        verticalAlign: 'middle'
+                                                                        }}  
+                                                                    >
+                                                                    </img>
+                                                        </Box>
+                                {/* {' '}
                                 <Box component="span" role="img" aria-label="Down arrow" 
                                 sx={{ 
                                     fontSize: '1.5rem',
@@ -122,7 +146,7 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                     color: theme.palette.logo.black
                                     }}>
                                     ⤵️
-                                </Box>
+                                </Box> */}
                             </Typography>
                             
                             <Box sx={{ width: '80%' }}>
@@ -134,12 +158,20 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                         value={bookInputs.book1} 
                                         onChange={handleChange} 
                                         required
+                                        sx={{
+                                          '&:focus-within': {
+                                            width: '80%',
+                                            opacity: 1,
+                                            '& input::placeholder': {
+                                            color: 'rgba(37,37,37,.75)',
+                                            },}  
+                                        }}
+                                        
                                          />
                                     </div>
                                 </Tooltip>
                             </Box>
                             
-                            {/* MODIFIED: Using a single TextField with dynamic sx prop */}
                             <Tooltip title='Example: "I enjoyed the character development and themes of medieval adventure."' placement='right-start' arrow>
                                 <TextField
                                     name="reason1"

@@ -18,6 +18,7 @@ const theme = createTheme ({
     },
     logo: {
       blue: 'rgb(115, 219, 219)',
+      blue2: 'rgba(127, 219, 219, 0.72)',
       red: 'rgb(255, 109, 99)',
       redlight: 'rgb(255, 131, 122)',
       // redlight: 'rgb(254, 121, 111,)',

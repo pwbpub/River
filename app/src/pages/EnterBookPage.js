@@ -59,7 +59,7 @@ const EnterBookPage = () => {
             width: '600px',
             height: '600px',
             pointerEvents: 'none',
-            zIndex: 0
+            zIndex: -1
           }}
         >
           <img

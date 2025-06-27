@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     useTheme,
     AppBar,
@@ -8,7 +8,7 @@ import {
 
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 
 function LinkTab(props) {
@@ -22,11 +22,12 @@ function LinkTab(props) {
 
 const Nav = ({ children }) => {
   const theme = useTheme();
-  const [value, setValue] = useState(0); //to manage the current tab value
+  const location = useLocation();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  let currentTabValue = 0;
+  if (location.pathname === '/vibe') {
+      currentTabValue = 1;
+  }
 
   const getBorderRadius = (index) => ({
     ...(index === 0 ? {
@@ -91,10 +92,8 @@ const Nav = ({ children }) => {
         }}
         > 
           <Tabs
-            value={value}
-            onChange={handleChange}
+            value={currentTabValue}
             textColor='inherit'
-            // indicatorColor='secondary'
             centered
             variant= 'fullWidth'
             aria-label="navigation tabs"
@@ -205,7 +204,7 @@ const Nav = ({ children }) => {
 
                  // Vibe icon amber/gold when selected
                 '& .MuiSvgIcon-root': {
-                  color: 'rgba(4, 182, 123, 0.95)', 
+                  color: 'rgb(51, 215, 188)', 
                   opacity: 1,
                   transform: 'scale(1.1)', // Slightly larger when selected
                 },
