@@ -19,6 +19,8 @@ import { fetchRecommendations } from '../api';
 import AutocompleteInput from './AutocompleteInput';
 import customredarrow from '../images/customredarrow.png'
 
+//This component takes the users favorite books(via the "autocompleteinput" comp) and an optional reason(TextField)
+//and sends the data to the llm(via routes/books.js) for recommendation creation.
 
 const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInputCollapsed, onReset }) => {
     const theme = useTheme();
@@ -62,6 +64,7 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
     };
     
     //Reusable style function that returns dynamic styles for the TextField
+    //This avoids cluttering each <textfield> with all this code
     const getReasonFieldStyles = (reasonValue) => ({
         // Base styles that always apply
         mx: 'auto',
@@ -76,7 +79,7 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
         '& .MuiOutlinedInput-root': {
             bgcolor: 'white',
             borderRadius: reasonValue.length > 0 ? 1 : 5, 
-            transition: 'border-radius 0.3s ease-in-out', // Animate
+            transition: 'border-radius 0.3s ease-in-out', // Animates
         },
         
         // when the input is focused
