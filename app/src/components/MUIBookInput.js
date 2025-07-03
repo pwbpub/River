@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     useTheme,
     Box,
@@ -31,6 +31,38 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
     });
     const [numberOfForms, setNumberOfForms] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [loadingMessage, setLoadingMessage] = useState('');
+useEffect(() => {
+        // an array to hold all timer IDs
+        const timers = [];
+
+        if (loading) {
+            setLoadingMessage("Magicians at Work...Please Wait");
+
+            timers.push(
+                setTimeout(() => {
+                    setLoadingMessage("A Wizard is never late...");
+                }, 4000)
+            );
+
+            timers.push(
+                setTimeout(() => {
+                    setLoadingMessage("He arrives precisely when he means to.");
+                }, 9000)
+            );
+            timers.push(
+                setTimeout(() => {
+                    setLoadingMessage("We swear this never happens!");
+                }, 13800)
+            );
+        }
+
+        // Cleanup function now loops through the array and clears ALL scheduled timers
+        return () => {
+            timers.forEach(timerId => clearTimeout(timerId));
+        };
+    }, [loading]);
+
 
     const handleChange = (e) => {
         setBookInputs({ ...bookInputs, [e.target.name]: e.target.value });
@@ -63,7 +95,7 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
         }
     };
     
-    //Reusable style function that returns dynamic styles for the TextField
+    //(Reusable)function that returns dynamic styles for the TextField
     //This avoids cluttering each <textfield> with all this code
     const getReasonFieldStyles = (reasonValue) => ({
         // Base styles that always apply
@@ -163,7 +195,7 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                         required
                                         sx={{
                                           '&:focus-within': {
-                                            width: '80%',
+                                            width: '100%',
                                             opacity: 1,
                                             '& input::placeholder': {
                                             color: 'rgba(37,37,37,.75)',
@@ -261,7 +293,9 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                                 '&:hover': { bgcolor: 'rgb(204, 84, 82)' },
                                 '&:disabled': { bgcolor: theme.palette.logo.red}
                             }}>
-                                {loading ? (<><CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />Loading Recommendations...</>) : 'Get Recommendations'}
+                                {loading ? (<><CircularProgress size={20} 
+                                color="inherit" 
+                                sx={{ mr: 1 }} />{loadingMessage}</>) : 'Get Recommendations'}
                             </Button>
                         </Box>
                     </form>

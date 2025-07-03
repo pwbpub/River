@@ -13,6 +13,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 function App() {
+  // The App component serves as the main entry point for the application.
+  // It sets up the router for navigation.
   return (
     <ThemeProvider theme={theme}>
       <Router>

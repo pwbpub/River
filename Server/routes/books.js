@@ -7,62 +7,65 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-// MODIFIED: Overhauled scoring function to prioritize completeness and quality signals.
 const getBookScore = (item) => {
     if (!item || !item.volumeInfo) return 0;
     const info = item.volumeInfo;
-
     let score = 0;
-    
-    
     if (info.imageLinks?.thumbnail) score += 100;
     if (info.language === 'en') score += 75;
     if (info.description && info.description.length > 50) score += 50;
     if (info.industryIdentifiers?.some(id => id.type === 'ISBN_13')) score += 40;
-    
-    
-    if (info.ratingsCount) {
-        score += info.ratingsCount;
-    }
-
+    if (info.ratingsCount) score += info.ratingsCount;
     return score;
 };
 
-
 router.post('/recommendations', async (req, res) => {
-    const { book1, reason1, book2, reason2, book3, reason3 } = req.body;
+    const { book1, reason1, book2, reason2, book3, reason3, vibe, filters } = req.body;
 
-    if (!book1 && !book2 && !book3) {
-        return res.status(400).json({ error: 'At least one book is required.' });
-    }
-    
-    try {
-        const prompt = 
-            `Based on my favorite books, recommend exactly 3 other books.
-            For each recommendation, provide the title, author, a compelling reason, the original publication year, a standard page count, and a concise, high-quality summary.
+    let prompt;
+    // The prompt now requests a longer summary to serve as a good fallback.
+    const responseFormat = `
+        Your response must follow this exact format for each book, with no extra text:
+        Title: [Book Title]
+        Author: [Author Name]
+        Reason: [Why this book matches the request]
+        Original Year: [Year]
+        Page Count: [Number of pages]
+        Summary: [A 4-10 sentence, well-written, spoiler-free description of the book]`;
 
+    if (vibe !== undefined) {
+        if (!vibe.trim()) {
+            return res.status(400).json({ error: 'A description of what you want to read is required.' });
+        }
+        prompt = `Based on the following user request: "${vibe}", recommend exactly 3 books.`;
+        
+        if (filters?.isFiction === 'fiction') {
+            prompt += ' The books must be fiction.';
+        } else if (filters?.isFiction === 'non-fiction') {
+            prompt += ' The books must be non-fiction.';
+        }
+        prompt += responseFormat;
+    } else {
+        if (!book1 && !book2 && !book3) {
+            return res.status(400).json({ error: 'At least one book is required.' });
+        }
+        prompt = `Based on my favorite books, recommend exactly 3 other books.
             My Books:
             - ${book1 || 'N/A'} (${reason1 || 'No reason provided'})
             - ${book2 || 'N/A'} (${reason2 || 'No reason provided'})
             - ${book3 || 'N/A'} (${reason3 || 'No reason provided'})
-        
-            Your response must follow this exact format for each book:
-            Title: [Book Title]
-            Author: [Author Name]
-            Reason: [Why this book is being recommended]
-            Original Year: [Year]
-            Page Count: [Number of pages]
-            Summary: [A 2-3 sentence, well-written summary of the plot or main ideas without spoilers]`;
-        
+            ${responseFormat}`;
+    }
+    
+    try {
         const response = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [{ role: 'user', content: prompt }],
-            max_tokens: 600, // Increased token limit for more data
+            max_tokens: 700, // Increased token limit for longer summaries
             temperature: 0.7,
         });
 
         const gptContent = response.choices[0].message.content;
-        
         const recommendations = [];
         const recommendationBlocks = gptContent.split(/Title:/).slice(1);
 
@@ -72,7 +75,7 @@ router.post('/recommendations', async (req, res) => {
             const reasonMatch = block.match(/Reason:\s*(.*)/);
             const yearMatch = block.match(/Original Year:\s*(.*)/);
             const pageCountMatch = block.match(/Page Count:\s*(\d+)/);
-            const summaryMatch = block.match(/Summary:\s*(.*)/s); // 's' flag to match across newlines
+            const summaryMatch = block.match(/Summary:\s*(.*)/s);
             
             if (titleMatch && authorMatch && reasonMatch && yearMatch && summaryMatch && pageCountMatch) {
                 recommendations.push({
@@ -80,15 +83,15 @@ router.post('/recommendations', async (req, res) => {
                     author: authorMatch[1].trim(),
                     reason: reasonMatch[1].trim(),
                     originalYear: yearMatch[1].trim(),
-                    llmPageCount: pageCountMatch[1].trim(), // Store LLM fallbacks
-                    llmSummary: summaryMatch[1].trim(),   // Store LLM fallbacks
+                    llmPageCount: pageCountMatch[1].trim(),
+                    llmSummary: summaryMatch[1].trim(),
                 });
             }
         }
         
         if (recommendations.length === 0) {
             throw new Error('Could not parse recommendations from LLM response.');
-        }   //Maybe add retry function(1-2 runs) to allow llm another chance
+        }
 
         const enhancedRecommendations = await Promise.all(
             recommendations.map(async (rec) => {
@@ -106,12 +109,31 @@ router.post('/recommendations', async (req, res) => {
                     
                     const bookData = bestBookItem ? bestBookItem.volumeInfo : null;
                     
+                    // --- NEW LOGIC: Rewrite the description using the LLM ---
+                    let finalDescription = rec.llmSummary; // Start with the LLM's summary as a fallback
+
+                    if (bookData?.description) {
+                        try {
+                            const rewritePrompt = `Please rewrite the following book description to be a high-quality, spoiler-free description of 4 to 10 sentences.
+                                                    If the original publisher description looks good and does not contain too much fluff/publisher nonsense(for example "'The best book you'll read this year' New York Times'"),
+                                                    you can keep the original description entirely or trim it/edit it to be 12 sentences or less. Please lean towards keeping the publisher description where possible. Description: "${bookData.description}"`;
+                            const rewriteResponse = await openai.chat.completions.create({
+                                model: 'gpt-4o-mini',
+                                messages: [{ role: 'user', content: rewritePrompt }],
+                                max_tokens: 250,
+                                temperature: 0.6,
+                            });
+                            finalDescription = rewriteResponse.choices[0].message.content.trim();
+                        } catch (rewriteError) {
+                            console.error("Could not rewrite description, using original from Google Books.", rewriteError.message);
+                            finalDescription = bookData.description; // Fallback to raw Google description on rewrite failure
+                        }
+                    }
+
                     const getISBN = (identifiers) => {
                         if (!identifiers) return null;
                         const isbn13 = identifiers.find(id => id.type === 'ISBN_13');
-                        if (isbn13) return isbn13.identifier;
-                        const isbn10 = identifiers.find(id => id.type === 'ISBN_10');
-                        return isbn10 ? isbn10.identifier : null;
+                        return isbn13 ? isbn13.identifier : null;
                     };
 
                     const affiliateId = 'thesheappr-21';
@@ -119,14 +141,8 @@ router.post('/recommendations', async (req, res) => {
                     const amazonLink = `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;
                     
                     return {
-                        title: rec.title,
-                        author: rec.author,
-                        reason: rec.reason,
-                        originalYear: rec.originalYear,
-                        amazonLink: amazonLink,
-                        
-                        // Data from Google Books API with LLM fallbacks
-                        description: bookData?.description || rec.llmSummary,
+                        title: rec.title, author: rec.author, reason: rec.reason, originalYear: rec.originalYear, amazonLink,
+                        description: finalDescription, // Use the new, rewritten description
                         pageCount: bookData?.pageCount || rec.llmPageCount,
                         coverImage: bookData?.imageLinks?.thumbnail || bookData?.imageLinks?.smallThumbnail || null,
                         genre: bookData?.categories?.[0] || 'Fiction',

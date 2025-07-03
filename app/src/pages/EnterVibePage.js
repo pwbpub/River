@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Box} from '@mui/material';
-
+import MUIOutputRecommendation from '../components/MUIOutputRecommendation';
 import openbook from '../images/openbook.png';
 import radialFade from '../images/radial-fade.png';
 import MUIVibeInput from '../components/MUIVibeInput';
@@ -96,11 +96,17 @@ const EnterVibePage = () => {
       </Box>
 
       <MUIVibeInput
-        sx={{zIndex: 2}}
-      >
+        setRecommendations={setRecommendations}
+        setError={setError}
+        isInputCollapsed={isInputCollapsed}
+        setIsInputCollapsed={setIsInputCollapsed}
+        onReset={handleReset}
+      />
 
-      </MUIVibeInput>
-      
+      <MUIOutputRecommendation
+        recommendations={recommendations}
+        error={error}
+      />      
     </>
   );
 };
