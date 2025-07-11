@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
     useTheme,
     Box,
@@ -17,7 +17,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { fetchRecommendations } from '../api';
 import AutocompleteInput from './AutocompleteInput';
-import customredarrow from '../images/customredarrow.png'
+import customredarrow from '../images/customredarrow.png';
+import useLoadMessages from '../hooks/useLoadMessages.js'; // MODIFIED: Import the new hook
+
 
 //This component takes the users favorite books(via the "autocompleteinput" comp) and an optional reason(TextField)
 //and sends the data to the llm(via routes/books.js) for recommendation creation.
@@ -31,37 +33,8 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
     });
     const [numberOfForms, setNumberOfForms] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [loadingMessage, setLoadingMessage] = useState('');
-useEffect(() => {
-        // an array to hold all timer IDs
-        const timers = [];
-
-        if (loading) {
-            setLoadingMessage("Magicians at Work...Please Wait");
-
-            timers.push(
-                setTimeout(() => {
-                    setLoadingMessage("A Wizard is never late...");
-                }, 4000)
-            );
-
-            timers.push(
-                setTimeout(() => {
-                    setLoadingMessage("He arrives precisely when he means to.");
-                }, 9000)
-            );
-            timers.push(
-                setTimeout(() => {
-                    setLoadingMessage("We swear this never happens!");
-                }, 13800)
-            );
-        }
-
-        // Cleanup function now loops through the array and clears ALL scheduled timers
-        return () => {
-            timers.forEach(timerId => clearTimeout(timerId));
-        };
-    }, [loading]);
+    // const [loadingMessage, setLoadingMessage] = useState('');
+    const loadingMessage = useLoadMessages(loading);
 
 
     const handleChange = (e) => {

@@ -4,6 +4,7 @@ import MUIOutputRecommendation from '../components/MUIOutputRecommendation';
 import openbook from '../images/openbook.png';
 import radialFade from '../images/radial-fade.png';
 import MUIVibeInput from '../components/MUIVibeInput';
+import { Helmet }  from 'react-helmet-async';
 
 const EnterVibePage = () => {
   // State for recommendations, errors, and the collapsed state
@@ -37,6 +38,10 @@ const EnterVibePage = () => {
 
   return (
      <>
+      <Helmet>
+        <title>Book Recommendations - Find Your Dream Book</title>
+        <meta name="description" content="Get a book recommendation customized to you. Fiction, fantasy, romance, horror. Find the next read that you or your book club will love." />
+      </Helmet>
       {/* Container for logo and radial fade*/}
       <Box 
         sx={{

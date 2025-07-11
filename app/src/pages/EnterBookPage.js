@@ -4,6 +4,7 @@ import MUIBookInput from '../components/MUIBookInput';
 import MUIOutputRecommendation from '../components/MUIOutputRecommendation';
 import openbook from '../images/openbook.png';
 import radialFade from '../images/radial-fade.png';
+import { Helmet }  from 'react-helmet-async';
 
 const EnterBookPage = () => {
   // State for recommendations, errors, and the collapsed state
@@ -37,6 +38,11 @@ const EnterBookPage = () => {
 
   return (
      <>
+      <Helmet>
+        <title>Book Recommendations - Find the Best Book</title>
+        <meta name="description" content="Get a personalized book recommendation. Discover new authors and titles based on your specific taste. Find the best fiction, fantasy, romance, horror, non-fiction and more for either your book club or your own personal reading." />
+      </Helmet>
+
       {/* Container for logo and radial fade*/}
       <Box 
         sx={{
