@@ -116,45 +116,44 @@ const MUIBookInput = ({ setRecommendations, setError, isInputCollapsed, setIsInp
                     <form onSubmit={handleSubmit} noValidate>
                         <Stack spacing={1.5} sx={{ justifyContent: "flex-start", alignItems: "center", mx: 'auto' }}>
                             <Typography
-                                variant="button" sx={{
-                                textAlign: 'center',
-                                color: theme.palette.logo.black,
-                                mb: 1.5,
-                                fontWeight:600,
-                                fontSize: '1.4rem',
-                                letterSpacing: '.04em',
-                                // lineHeight: "1em"
-                            }}>
-                                Your Favorite Book <Box component="span" role="img" aria-label="Down arrow" 
-                                                            sx={{
-                                                                paddingTop: "0",
-                                                                mt: "0",
-                                                                fontSize: '1.5rem',
-                                                                verticalAlign: 'middle',
-                                                                color: theme.palette.logo.black
-                                                                }}>
-                                                                    <img
-                                                                    src={customredarrow}
-                                                                    alt=""
-                                                                    style={{
-                                                                        paddingTop: '0px',
-                                                                        marginTop: '-7px',
-                                                                        height: '1.4em',        
-                                                                        width: 'auto',        
-                                                                        verticalAlign: 'middle'
-                                                                        }}  
-                                                                    >
-                                                                    </img>
-                                                        </Box>
-                                {/* {' '}
-                                <Box component="span" role="img" aria-label="Down arrow" 
-                                sx={{ 
-                                    fontSize: '1.5rem',
-                                    verticalAlign: 'middle',
-                                    color: theme.palette.logo.black
-                                    }}>
-                                    ⤵️
-                                </Box> */}
+                                variant="button" 
+                                sx={{
+                                    textAlign: 'center',
+                                    color: theme.palette.logo.black,
+                                    mb: 1.5,
+                                    fontWeight: 600,
+                                    fontSize: '1.4rem',
+                                    letterSpacing: '.04em',
+                                    // FLEXBOX SOLUTION: Prevent wrapping
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '0.25rem',
+                                    whiteSpace: 'nowrap'
+                                }}
+                            >
+                                Your Favorite Book
+                                <Box 
+                                    component="span" 
+                                    role="img" 
+                                    aria-label="Down arrow" 
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexShrink: 0, // Prevent arrow from shrinking
+                                        color: theme.palette.logo.black
+                                    }}
+                                >
+                                    <img
+                                        src={customredarrow}
+                                        alt=""
+                                        style={{
+                                            height: '1.4em',        
+                                            width: 'auto',        
+                                            display: 'block'
+                                        }}  
+                                    />
+                                </Box>
                             </Typography>
                             
                             <Box sx={{ width: '80%' }}>

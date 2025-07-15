@@ -112,32 +112,56 @@ const MUIVibeInput = ({ setRecommendations, setError }) => {
                             textAlign: 'center',
                             color: theme.palette.logo.black,
                             mb: 1.5,
-                            fontWeight:600,
-                            fontSize: '1.4rem',
-                            letterSpacing: '.04em'
+                            fontWeight: 600,
+                            // Responsive font size to help fit on small screens
+                            fontSize: { 
+                                xs: '1.1rem',   // Smaller on mobile for longer text
+                                sm: '1.3rem',   
+                                md: '1.4rem',   
+                                lg: '1.4rem',   
+                                xl: '1.4rem'    
+                            },
+                            letterSpacing: '.04em',
+                            // Flexbox layout
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.25rem',
+                            // RESPONSIVE: Allow wrapping only on very small screens
+                            whiteSpace: { 
+                                xs: 'normal',   // Allow wrapping on mobile
+                                sm: 'nowrap'    // No wrapping on larger screens
+                            },
+                            // Ensure proper wrapping behavior on mobile
+                            flexWrap: { 
+                                xs: 'wrap', 
+                                sm: 'nowrap' 
+                            }
                         }}
                     >                                                           
-                        Describe Your <Box component="span" role="img" aria-label="Down arrow" 
-                                            sx={{
-                                                paddingTop: "0",
-                                                mt: "0",
-                                                fontSize: '1.5rem',
-                                                verticalAlign: 'middle',
-                                                color: theme.palette.logo.black
-                                            }}>
-                                                <img
-                                                    src={customarrow}
-                                                    alt=""
-                                                    style={{
-                                                        paddingTop: '0px',
-                                                        marginTop: '-7px',
-                                                        height: '1.2em',        
-                                                        width: 'auto',        
-                                                        verticalAlign: 'middle'
-                                                    }}  
-                                                >
-                                                </img>
-                                        </Box> Dream Book 
+                        Describe Your
+                        <Box 
+                            component="span" 
+                            role="img" 
+                            aria-label="Down arrow" 
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexShrink: 0, // Prevent arrow from shrinking
+                                color: theme.palette.logo.black
+                            }}
+                        >
+                            <img
+                                src={customarrow}
+                                alt=""
+                                style={{
+                                    height: '1.2em',        
+                                    width: 'auto',        
+                                    display: 'block'
+                                }}  
+                            />
+                        </Box>
+                        Dream Book 
                     </Typography>
 
                     <ToggleButtonGroup

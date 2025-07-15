@@ -1,5 +1,48 @@
+/* Clean App.css - No overflow or scrolling issues */
+
+/* Global styles for clean viewport handling */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  /* Remove any default overflow behaviors */
+  overflow-x: hidden;
+}
+
+/* Ensure root container is clean */
+#root {
+  width: 100%;
+  position: relative;
+  /* No height constraints that could cause issues */
+}
+
+/* Box sizing for all elements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Ensure images don't cause overflow */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Smooth scrolling (optional) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove any default margins/padding that could interfere */
 body {
-    background-image: url('./images/VerticalCubesBackground96.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+  line-height: 1.6;
+}
+
+/* Ensure no weird mobile viewport issues */
+@media (max-width: 768px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
   }
+}

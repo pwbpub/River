@@ -1,3 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
+# public/robots.txt
 User-agent: *
-Disallow:
+Allow: /
+Sitemap: https://your-live-app-url.com/sitemap.xml

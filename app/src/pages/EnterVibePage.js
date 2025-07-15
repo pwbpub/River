@@ -7,27 +7,17 @@ import MUIVibeInput from '../components/MUIVibeInput';
 import { Helmet }  from 'react-helmet-async';
 
 const EnterVibePage = () => {
-  // State for recommendations, errors, and the collapsed state
   const [recommendations, setRecommendations] = useState([]);
   const [error, setError] = useState('');
   const [isInputCollapsed, setIsInputCollapsed] = useState(false);
-  const [inputKey, setInputKey] = useState(Date.now()); // Key to force-reset the input component
+  const [inputKey, setInputKey] = useState(Date.now());
 
-  /**
-   * This effect listens for changes to recommendations or errors.
-   * If either of them have content, it triggers the input component to collapse.
-   */
   useEffect(() => {
     if ((recommendations && recommendations.length > 0) || error) {
       setIsInputCollapsed(true);
     }
   }, [recommendations, error]);
 
-  /**
-   * Handles the reset button. It clears all the state, returning the
-   * app to its initial view, and changes the key of the MUIBookInput
-   * component to ensure its internal state is reset.
-   */
   const handleReset = () => {
     setRecommendations([]);
     setError('');
@@ -35,49 +25,52 @@ const EnterVibePage = () => {
     setInputKey(Date.now());
   };
 
-
   return (
-     <>
+    <Box sx={{ width: '100%', position: 'relative' }}>
       <Helmet>
-        <title>Book Recommendations - Find Your Dream Book</title>
+        <title>Book Finder - Reveal Your Dream Book</title>
         <meta name="description" content="Get a book recommendation customized to you. Fiction, fantasy, romance, horror. Find the next read that you or your book club will love." />
       </Helmet>
-      {/* Container for logo and radial fade*/}
+
+      {/* Logo container with CSS background radial fade */}
       <Box 
         sx={{
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          mt: 4,
-          mb: 0.5,
-          width: '100%'
-        }}
-      >
-        {/* Radial fade */}
-        <Box
-          sx={{
+          pt: { xs: 2, sm: 4 },
+          pb: 0.5,
+          width: '100%',
+          // CSS background approach - clean and reliable
+          '&::before': {
+            content: '""',
             position: 'absolute',
-            top: '55%',
+            top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '600px',
-            height: '600px',
+            // Simple responsive sizing without complex clamp
+            width: {
+              xs: '400px',
+              sm: '500px', 
+              md: '550px',
+              lg: '600px'
+            },
+            height: {
+              xs: '400px',
+              sm: '500px',
+              md: '550px', 
+              lg: '600px'
+            },
+            backgroundImage: `url(${radialFade})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
             pointerEvents: 'none',
             zIndex: -1
-          }}
-        >
-          <img
-            src={radialFade}
-            alt=""
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-            
-          />
-        </Box>
-        
+          }
+        }}
+      >
         {/* Logo */}
         <Box 
           sx={{
@@ -92,7 +85,8 @@ const EnterVibePage = () => {
             src={openbook} 
             alt="Book Logo" 
             style={{ 
-              maxWidth: '250px', 
+              maxWidth: '250px',
+              width: '60vw',
               height: 'auto',
               marginBottom: '1rem'
             }} 
@@ -101,6 +95,7 @@ const EnterVibePage = () => {
       </Box>
 
       <MUIVibeInput
+        key={inputKey}
         setRecommendations={setRecommendations}
         setError={setError}
         isInputCollapsed={isInputCollapsed}
@@ -112,7 +107,7 @@ const EnterVibePage = () => {
         recommendations={recommendations}
         error={error}
       />      
-    </>
+    </Box>
   );
 };
 
