@@ -28,8 +28,8 @@ const EnterBookPage = () => {
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
       <Helmet>
-        <title>Book Finder - Book Recommendations Tailored to You</title>
-        <meta name="description" content="Get a personalized book recommendation. Discover new authors and titles based on your specific taste. Find the best fiction, fantasy, romance, horror, non-fiction and more for either your book club or your own personal reading." />
+        <title>Book Wizard - Book Recommendations Tailored to You</title>
+        <meta name="description" content="Get a personalized book recommendation. Discover new authors and titles based on your specific taste. Find the best fiction, fantasy, romance, horror, non-fiction and more for either your book club or personal reading." />
       </Helmet>
       
       {/* Logo container with CSS background radial fade */}

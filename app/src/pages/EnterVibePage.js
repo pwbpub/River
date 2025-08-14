@@ -28,7 +28,7 @@ const EnterVibePage = () => {
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
       <Helmet>
-        <title>Book Finder - Reveal Your Dream Book</title>
+        <title>Book Wizard - Reveal Your Dream Book</title>
         <meta name="description" content="Get a book recommendation customized to you. Fiction, fantasy, romance, horror. Find the next read that you or your book club will love." />
       </Helmet>
 
