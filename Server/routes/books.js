@@ -136,7 +136,7 @@ router.post('/recommendations', async (req, res) => {
                         return isbn13 ? isbn13.identifier : null;
                     };
 
-                    const affiliateId = 'thesheappr-21';
+                    const affiliateId = 'bookwizard02-20';
                     const searchTerm = `${rec.title} ${rec.author}`.replace(/\s+/g, '+');
                     const amazonLink = `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;
                     
@@ -156,7 +156,7 @@ router.post('/recommendations', async (req, res) => {
                     return { 
                         title: rec.title, author: rec.author, reason: rec.reason, originalYear: rec.originalYear,
                         description: rec.llmSummary, pageCount: rec.llmPageCount, coverImage: null,
-                        amazonLink: `https://www.amazon.com/s?k=${rec.title}+${rec.author}&tag=thesheappr-21` 
+                        amazonLink: `https://www.amazon.com/s?k=${rec.title}+${rec.author}&tag=bookwizard02-20` 
                     };
                 }
             })
